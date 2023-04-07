@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "bastisringoffire": {
+      "hosting": {
+        "Ring-Of-Fire": [
+          "bastisringoffire"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "bastisringoffire"
+  }
+}
