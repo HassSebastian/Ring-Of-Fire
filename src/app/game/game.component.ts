@@ -1,8 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Game } from 'src/models/game';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
-// import { AngularFirestore } from '@angular/fire/compat/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  docData,
+  getDoc,
+  setDoc,
+} from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { get } from '@angular/fire/database';
 
 @Component({
   selector: 'app-game',
@@ -13,22 +24,38 @@ export class GameComponent implements OnInit {
   pickCardAnimation = false;
   currentCard;
   game: Game;
+  // games$: Observable<any[]>;
+  gamesCollection = collection(this.firestore, 'games');
+  gameId: string = '';
 
-  constructor(public dialog: MatDialog) {}
-  // constructor(private firestore: AngularFirestore, public dialog: MatDialog) {}
+  constructor(
+    private route: ActivatedRoute,
+    private firestore: Firestore = inject(Firestore),
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.newGame();
-    // this.firestore
-    //   .collection('games')
-    //   .valueChanges()
-    //   .subscribe((game) => {
-    //     console.log('Game update', game);
-    //   });
+    this.route.params.subscribe((params) => {
+      // this.gameId = params['id'];
+      // let docRef = doc(this.gamesCollection, this.gameId);
+      // let game$ = docData(docRef);
+      // game$.subscribe((game: any) => {
+      docData(doc(collection(this.firestore, 'games'), params['id'])).subscribe(
+        (game: any) => {
+          this.game.players = game.players;
+          this.game.currentPlayer = game.currentPlayer;
+          this.game.playedCards = game.playedCards;
+          this.game.stack = game.stack;
+        }
+      );
+    });
   }
 
   newGame() {
     this.game = new Game();
+    // const aCollection = collection(this.firestore, 'games');
+    // setDoc(doc(aCollection), this.game.toJson());
   }
 
   takeCard() {
