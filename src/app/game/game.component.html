@@ -35,6 +35,12 @@
   </div>
 </div>
 <app-game-info [card]="game.currentCard" class="pin-bottom"></app-game-info>
-<button mat-fab color="primary" class="btn-add" (click)="openDialog()">
+<button
+  *ngIf="!playerMax"
+  mat-fab
+  color="primary"
+  class="btn-add"
+  (click)="openDialog()"
+>
   <mat-icon>add</mat-icon>
 </button>

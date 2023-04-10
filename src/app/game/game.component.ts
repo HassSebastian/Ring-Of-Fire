@@ -20,6 +20,7 @@ export class GameComponent implements OnInit {
   game: Game;
   // gamesCollection = collection(this.firestore, 'games');
   gameId: string = '';
+  playerMax: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,15 +75,16 @@ export class GameComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((name: string) => {
       if (name && name.length > 0) {
-        if (this.game.players.length < 4) {
-          this.game.players.push(name);
-          this.saveGame();
-        } else {
-          alert('You can only have 8 players at a time.');
+        this.game.players.push(name);
+        this.saveGame();
+        console.log('players= ', this.playerMax);
+        if (this.game.players.length == 8) {
+          this.playerMax = true;
         }
       }
     });
   }
+
   saveGame() {
     // const docRef = doc(this.firestore, "games", this.gameId);
     // const gameData = this.game.toJson();
