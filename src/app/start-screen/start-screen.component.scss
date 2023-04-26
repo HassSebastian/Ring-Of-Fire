@@ -3,25 +3,31 @@
   height: 100vh;
   width: 100vw;
   max-width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
   span {
-    position: absolute;
-    top: 6%;
-    font-size: 70px;
+    display: flex;
+    justify-content: center;
+    padding-top: 6vh;
+    font-size: 5vw;
     color: rgba(0, 0, 0, 0.5);
-  }
-  img {
-    height: 80%;
-    margin-top: 7%;
   }
 }
 
-.playButton {
+.coverContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 45vh;
+}
+
+.cover {
   position: absolute;
-  top: 10%;
-  height: 80%;
+  max-width: 680px;
+  width: 70vw;
+  aspect-ratio: 1/1;
+}
+
+.playButton {
   opacity: 0.05;
   cursor: pointer;
   transition: 500ms ease-in-out;

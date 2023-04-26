@@ -7,5 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class PlayerComponent {
   @Input() name;
+  @Input() image = '1.png';
   @Input() playerActive: boolean = false;
 }
